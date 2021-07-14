@@ -44,11 +44,15 @@ func main() {
 		panic("Target url not configured. Please set \"PROXY_TARGET\" environmental variable.")
 	}
 
+	if len(port) < 1 {
+		panic("Host port not configured. Please set \"HOST_PORT\" environmental variable.")
+	}
+
 	// Log setup values
 	log.Printf("Proxying requests to http://%s:%s/ -> %s\n", host, port, target)
 
 	http.HandleFunc("/", handle)
-	if serveErr := http.ListenAndServe(":" + port, nil); serveErr != nil {
+	if serveErr := http.ListenAndServe(":"+port, nil); serveErr != nil {
 		panic(serveErr)
 	}
 }
